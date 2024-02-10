@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Created-By: 1.8.0_312 (Private Build)
+
+Name: Dockerfile
+SHA-256-Digest: d9CNVk4vJJIgeTyrefvDa74GxTQJiZpWrry6t8QQ8Is=
+
+Name: acc.env
+SHA-256-Digest: 9k38qph5O3b0l46neHOZFpz5UdXXDpVFAa4qq95W4CY=
+
+Name: asset/start_agent.sh
+SHA-256-Digest: 6c0y+en79WhiaKmk/chVgBIQ+UI9I5wdiTWmgwr6hjg=
+
+Name: .env
+SHA-256-Digest: bXSYqgNcmJEuXfd3+Sy+P34Jc2Iv6isSVRYZe84c6SE=
+
+Name: LICENSE
+SHA-256-Digest: +8d1vaH/M6R1OJi5x8aOHzbz+sZm6Ws0EB0mNhEEHvQ=
+
