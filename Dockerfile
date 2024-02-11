@@ -48,7 +48,8 @@ RUN dnf update -y && \
                     procps \
                     net-tools \
                     iputils \
-                    ln \
+                    coreutils \
+                    coreutils-common \
                     snapd && \
     dnf clean packages -y && \
     rm -rf /tmp/*
