@@ -28,9 +28,35 @@ spec:
       labels:
         app: mid-server-deploy
     spec:
+      initContainers:
+        - name: trivy-installer
+          image: ubuntu:latest
+          command: ["sh", "-c"]
+          args:
+            - |
+              apt-get update -y
+              apt-get install -y wget apt-transport-https gnupg lsb-release
+              wget https://github.com/aquasecurity/trivy/releases/download/v0.18.3/trivy_0.18.3_Linux-64bit.deb
+              dpkg -i trivy_0.18.3_Linux-64bit.deb
+              cp $(which trivy) /shared-volume/trivy
+          volumeMounts:
+            - name: shared-volume
+              mountPath: /shared-volume
       containers:
-        - image: gmmeng/mid-server:latest
+        - name: mid-server
+          image: gmmeng/mid-server:latest
           imagePullPolicy: Always
+          command: ["sh", "-c"]
+          args:
+            - |
+              mkdir /opt/snc_mid_server/agent/work/uploaded_files
+              cp /shared-volume/trivy /opt/snc_mid_server/agent/work/uploaded_files/trivy
+              /opt/snc_mid_server/init start
+              crontab -l > mycron
+              echo "* * * * * cp /shared-volume/trivy /opt/snc_mid_server/agent/work/uploaded_files/trivy" >> mycron
+              crontab mycron
+              rm mycron
+              
           env:
             - name: MID_INSTANCE_URL
               value: 'https://dev185921.service-now.com'
@@ -41,7 +67,9 @@ spec:
             - name: MID_SECRETS_FILE
               value: './mid-secrets.properties'
             - name: MID_SERVER_NAME
-              value: 'docker-host-$(POD_NAME_SUFFIX)'
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
             - name: MID_PROXY_HOST
               value: ''
             - name: MID_PROXY_PORT
@@ -63,10 +91,14 @@ spec:
             requests:
               cpu: "500m"
               memory: "512Mi"
-          terminationMessagePath: /dev/termination-log
-          terminationMessagePolicy: File
+          volumeMounts:
+            - name: shared-volume
+              mountPath: /shared-volume
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
       securityContext: {}
       terminationGracePeriodSeconds: 30
+      volumes:
+        - name: shared-volume
+          emptyDir: {}

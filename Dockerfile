@@ -50,6 +50,8 @@ RUN dnf update -y && \
                     iputils \
                     coreutils \
                     coreutils-common \
+                    cronie \
+                    cronie-anacron \
                     snapd && \
     dnf clean packages -y && \
     rm -rf /tmp/*
