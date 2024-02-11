@@ -47,9 +47,12 @@ RUN dnf update -y && \
                     curl \
                     procps \
                     net-tools \
-                    iputils && \
+                    iputils \
+                    snapd && \
     dnf clean packages -y && \
     rm -rf /tmp/*
+    ln -s /var/lib/snapd/snap /snap
+RUN snap install trivy
 
 
 # ##########################
