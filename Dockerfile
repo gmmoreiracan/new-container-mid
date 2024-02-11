@@ -47,7 +47,11 @@ RUN dnf update -y && \
                     curl \
                     procps \
                     net-tools \
-                    iputils && \
+                    iputils \
+                    coreutils \
+                    coreutils-common \
+                    cronie \
+                    cronie-anacron &&\
     dnf clean packages -y && \
     rm -rf /tmp/*
 
