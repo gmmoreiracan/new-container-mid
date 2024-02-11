@@ -51,11 +51,9 @@ RUN dnf update -y && \
                     coreutils \
                     coreutils-common \
                     cronie \
-                    cronie-anacron \
-                    snapd && \
+                    cronie-anacron &&\
     dnf clean packages -y && \
     rm -rf /tmp/*
-RUN /var/lib/snapd/snap install trivy
 
 
 # ##########################
