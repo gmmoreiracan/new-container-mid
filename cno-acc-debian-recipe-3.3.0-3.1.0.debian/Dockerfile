@@ -91,6 +91,9 @@ RUN	apt-get update && apt-get install -y curl procps && \
         chown -R $ACC_USER:$ACC_GROUP $ACC_CONF_DIR $ACC_LOG_DIR $ACC_CACHE_DIR $ACC_INSTALL_DIR /tmp/; \
     fi
 
+RUN apt-get install sudo -y && \
+    echo "$ACC_USER ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/$ACC_USER && \
+    chmod 0440 /etc/sudoers.d/$ACC_USER
 
 USER $ACC_USER;
 
