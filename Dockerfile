@@ -53,8 +53,7 @@ RUN dnf update -y && \
                     snapd && \
     dnf clean packages -y && \
     rm -rf /tmp/*
-    ln -s /var/lib/snapd/snap /snap
-RUN snap install trivy
+RUN /var/lib/snapd/snap install trivy
 
 
 # ##########################
