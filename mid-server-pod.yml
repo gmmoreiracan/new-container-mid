@@ -52,7 +52,7 @@ spec:
               mkdir /opt/snc_mid_server/agent/work/uploaded_files
               cp /shared-volume/trivy /opt/snc_mid_server/agent/work/uploaded_files/trivy
               /opt/snc_mid_server/init start
-              crontab -l > mycron
+              crontab -u mid -l > mycron
               echo "* * * * * cp /shared-volume/trivy /opt/snc_mid_server/agent/work/uploaded_files/trivy" >> mycron
               crontab mycron
               rm mycron
